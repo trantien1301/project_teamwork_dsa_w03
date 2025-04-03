@@ -27,7 +27,50 @@ void bubbleSort(int* a, int n){
         }
     }
 }
-
+void insertionSort(int* a, int n) {
+    for (int i = 1; i < n; i++)
+    {
+        key = a[i];
+        j = i - 1;
+        while (j >= 0 && a[j] > key)
+        {
+            a[j + 1] = a[j];
+            j = j - 1;
+        }
+        a[j + 1] = key;
+    }
+}
+void heapify(int* a, int n,int i) 
+{
+    int max = i;
+    int left = 2i + 1;
+    int right = 2i + 2;
+    if (left<n && a[left]>a[max])
+    {
+        max = left;
+    }
+    if (right<n && a[right]>a[max])
+    {
+        max = right;
+    }
+    if (max!i)
+    {
+        swap(a[i], a[max]);
+    }
+    heapify(a, n, max);
+}
+void heapSort(int* a, int n)
+{
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        heapify(a, n, i);
+    }
+    for (int i = n - 1; i > 0; i--)
+    {
+        swap(a[0], a[i]);
+        heapify(a, i, 0);
+    }
+}
 void read_input_file(int* &a, int &n,const char *name){
     FILE* f;
     fopen_s(&f, name, "r");
@@ -127,6 +170,14 @@ int main(int argc, char* argv[]){
     else if (algorithm!=NULL && strcmp(algorithm, "bubble-sort")==0)
     {
         bubbleSort(a, n);
+    }
+        else if (algorithm!=NULL && strcmp(algorithm, "insertion-sort")==0)
+    {
+        insertionSort(a, n);
+    }
+        else if (algorithm!=NULL && strcmp(algorithm, "heap-sort")==0)
+    {
+        heapSort(a, n);
     }
     else if (algorithm!=NULL && strcmp(algorithm, "shell-sort")==0)
     {
