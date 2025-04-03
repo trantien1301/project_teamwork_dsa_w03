@@ -3,6 +3,51 @@
 #include <cstring>
 
 using namespace std;
+void heapify(int* a, int n, int i)
+{
+    int max = i;
+    int left = 2 * i + 1;
+    int right = 2 * i + 2;
+    if (left<n && a[left]>a[max])
+    {
+        max = left;
+    }
+    if (right<n && a[right]>a[max])
+    {
+        max = right;
+    }
+    if (max != i)
+    {
+        swap(a[i], a[max]);
+        heapify(a, n, max);
+    }
+
+}
+void heapsort(int* a, int n)
+{
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
+        heapify(a, n, i);
+    }
+    for (int i = n - 1; i > 0; i--)
+    {
+        swap(a[0], a[i]);
+        heapify(a, i, 0);
+    }
+}
+void insertionsort(int* a, int n) {
+    for (int i = 1; i < n; i++)
+    {
+        int key = a[i];
+        int j = i - 1;
+        while (j >= 0 && a[j] > key)
+        {
+            a[j + 1] = a[j];
+            j = j - 1;
+        }
+        a[j + 1] = key;
+    }
+}
 
 void selectionsort(int* a, int n){
     for (int i=0; i<n-1; i++)
@@ -114,6 +159,15 @@ int main(int argc, char* argv[]){
     {
         bubblesort(a, n);
     }
+        else if (algorithm!=NULL && strcmp(algorithm, "insertion-sort")==0)
+    {
+        insertionsort(a, n);
+    }
+            else if (algorithm!=NULL && strcmp(algorithm, "heap-sort")==0)
+    {
+        heapsort(a, n);
+    }
+                
     else
     {
         cout << "Algorithm not specified or not recognized!" << endl;  
